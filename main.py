@@ -1,16 +1,32 @@
-# This is a sample Python script.
+from flask import Flask, request, render_template
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+app = Flask(__name__)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.route("/<int:port>")
+def hello(port):
+    return "%d ^ 2 = %d" % (port, port ** 2)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+@app.route("/<string:username>")
+def introduction(username):
+    return "我是%s，自己代言。" % username
+
+
+@app.route("/path/<path:home>")
+def your_home(home):
+    return "你的家目录： %s" % home
+
+
+@app.route("/http", methods=["POST", "GET"])
+def http_type():
+    if request.method == "POST":
+        return "pppppppp"
+    elif request.method == "GET":
+        return "gggggggg"
+
+
+@app.route("/tpl/<string:args>")
+def templates_test(args=None):
+    return render_template("hello.html")
+
